@@ -1,0 +1,14 @@
+一般来说，编译源码安装的库或者程序都会安装在/usr/local目录中：
+如开源加密库Crypto++，执行make 编译完成后执行make install （需要root权限）后：
+头文件安装在/usr/local/include/cryptopp目录下面，
+lib文件在/usr/local/lib下面。
+如果此时直接包含头文件编译会报错，因为这个目录默认不在PATH环境变量中。系统找不到头文件。
+此时需要配置/etc/profile,需要root权限，可以使用sudo或者干脆su root，然后以root用户身份来操作。
+1. chmod 777 /etc/profile
+2. gedit /etc/profile
+3.在PATH环境变量的那一行下面添加如下变量：
+export CPLUS_INCLUDE_PATH=/usr/local/include/cryptopp:$CPLUS_INCLUDE_PATH
+export LIBRARY_PATH=/usr/local/lib:$LIBRARY_PATH
+保存退出。
+4.执行命令：source /etc/profile刷新。ok
+下载可以使用了，编译的时候要这么写：g++ -o 输出文件名 源文件名.cpp -lcrypto
